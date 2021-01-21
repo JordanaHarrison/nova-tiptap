@@ -54,6 +54,7 @@
                                     :isActive="isActive"
                                     :linkMenuIsActive="linkMenuIsActive"
                                     :linkUrl="linkUrl"
+																		:linkTarget="linkTarget"
                                     :hideLinkMenu="hideLinkMenu"
                                     :showLinkMenu="showLinkMenu"
                                     :getMarkAttrs="getMarkAttrs"
@@ -151,7 +152,7 @@ export default {
             headingLevels: 6,
 
             linkUrl: null,
-
+						linkTarget: true,
             linkMenuIsActive: false,
 
             editor: null,
@@ -228,16 +229,18 @@ export default {
 
         showLinkMenu(attrs) {
             this.linkUrl = attrs.href;
+            this.linkTarget = attrs.target;
             this.linkMenuIsActive = true;
         },
 
         hideLinkMenu() {
             this.linkUrl = null;
+            this.linkTarget = true;
             this.linkMenuIsActive = false;
         },
 
-        setLinkUrl(command, url) {
-            command({ href: url });
+        setLinkUrl(command, {url, target}) {
+            command({ href: url, target: target ? "_blank" : "" });
             this.hideLinkMenu();
             this.editor.focus();
         },
@@ -367,6 +370,17 @@ export default {
     height: 16px;
 }
 
+.tiptap-button-form .external-label {
+		display: flex;
+		align-items: center;
+		font-size: 13px;
+		font-weight: normal;
+		margin-right: 10px;
+}
+
+.tiptap-button-form .external-label input {
+		margin-left: 5px;
+}
 
 .tiptap-button::before {
     margin: 0;

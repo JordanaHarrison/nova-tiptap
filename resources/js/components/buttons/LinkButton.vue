@@ -9,7 +9,7 @@
                 z-10
             "
             v-show="linkMenuIsActive"
-            @submit.prevent="setLinkUrl(commands.link, linkUrl)"
+            @submit.prevent="setLinkUrl(commands.link, {url: linkUrl, target: linkTarget})"
         >
             <input
                 class="
@@ -25,10 +25,12 @@
                 ref="linkInput"
                 @keydown.esc="hideLinkMenu"
             />
-
+					
+						<label class="external-label">External <input ref="linkTarget" type="checkbox" v-model="linkTarget" checked /></label>
+					
             <button
                 class="btn is-close"
-                @click="setLinkUrl(commands.link, null)"
+                @click="setLinkUrl(commands.link, {url: null, target: false})"
                 type="button"
             >
                 <font-awesome-icon :icon="['fas', 'times-circle']">
@@ -72,7 +74,7 @@
             :class="[
                 (isActive.link() ? 'btn-primary' : '')
             ]"
-            @click="setLinkUrl(commands.link, null)"
+            @click="setLinkUrl(commands.link, {url: null, target: false})"
         >
             <font-awesome-icon :icon="['fas', 'unlink']">
             </font-awesome-icon>
@@ -95,6 +97,7 @@ export default {
         'isActive',
         'commands',
         'linkUrl',
+        'linkTarget',
         'hideLinkMenu',
         'showLinkMenu',
         'setLinkUrl',
